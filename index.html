@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: rgb(135, 186, 210);
+        }
+
+        h1 {
+            color: black;
+        }
+
+        fieldset {
+            color: black;
+            margin: 20px;
+        }
+
+        legend {
+            display: block;
+            padding-left: 10px;
+            padding-right: 10px;
+            border: 3px solid green;
+            background-color: tomato;
+            color: white;
+        }
+
+        fieldset {
+            background-color: #eeeeee;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Практическая работа №16</h1>
+    <p>Мажитов Фархат</p>
+    <p>По2210к</p>
+    <fieldset>
+        <legend>Задание 1</legend>
+        <p>Создайте объект "пользователь" с полями "имя", "возраст" и "email".
+            Заполните их значениями и выведите информацию о пользователе на веб-странице в
+            виде таблицы.</p>
+        <button onclick="showUserInfo()">Нажми меня</button>
+        <table id="userTable" border="1"></table>
+    </fieldset>
+    <fieldset>
+        <legend>Задание 2</legend>
+        <p>Создайте объект "автомобиль" с полями "марка" и "скорость". Добавьте
+            метод "ускорить", который будет увеличивать скорость автомобиля на определенное
+            значение при каждом вызове. Выведите текущую скорость автомобиля на
+            веб-странице.</p>
+        <button onclick="accelerateCar()">Нажми меня</button>
+        <p id="speedDisplay"></p>
+    </fieldset>
+    <fieldset>
+        <legend>Задание 3</legend>
+        <p>Создайте объект "банковский счет" с методами для пополнения, снятия
+            средств и проверки баланса. Разработайте веб-страницу, где пользователь может
+            взаимодействовать с этим объектом, вводя суммы для пополнения и снятия средств, и
+            выводя результат на веб-странице.</p>
+        <input type="number" id="amount" placeholder="Сумма"><br><br>
+        <button onclick="deposit()">Пополнить</button>
+        <button onclick="withdraw()">Снять</button>
+        <p id="balanceDisplay"></p>
+    </fieldset>
+    <fieldset>
+        <legend>Задание 4</legend>
+        <p>Разработайте объект, который генерирует собственные адреса электронной почты на
+            основе вводимых пользователем данных и включает методы проверки.
+            Hint: можно использовать шаблон (Regular expressions).</p>
+        <input type="text" id="firstName" placeholder="Имя">
+        <input type="text" id="lastName" placeholder="Фамилия">
+        <button onclick="generateEmail()">Нажми меня</button>
+        <p id="emailDisplay"></p>
+    </fieldset>
+    <script>
+        // Задание 1
+        function showUserInfo() {
+            var user = {
+                name: "Иван",
+                age: 30,
+                email: "ivan@example.com"
+            };
+
+            var table = document.getElementById("userTable");
+            var row = table.insertRow();
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+
+            cell1.innerHTML = user.name;
+            cell2.innerHTML = user.age;
+            cell3.innerHTML = user.email;
+        }
+
+        // Задание 2
+        var car = {
+            brand: "Toyota",
+            speed: 60,
+            accelerate: function (value) {
+                this.speed += value;
+            }
+        };
+
+        function accelerateCar() {
+            car.accelerate(10);
+            var speedDisplay = document.getElementById("speedDisplay");
+            speedDisplay.innerHTML = "Текущая скорость: " + car.speed;
+        }
+
+        // Задание 3
+        var bankAccount = {
+            balance: 0,
+            deposit: function () {
+                var amount = parseInt(document.getElementById("amount").value);
+                this.balance += amount;
+                updateBalance();
+            },
+            withdraw: function () {
+                var amount = parseInt(document.getElementById("amount").value);
+                if (this.balance >= amount) {
+                    this.balance -= amount;
+                    updateBalance();
+                } else {
+                    alert("Недостаточно средств на счете.");
+                }
+            }
+        };
+
+        function deposit() {
+            bankAccount.deposit();
+        }
+
+        function withdraw() {
+            bankAccount.withdraw();
+        }
+
+        function updateBalance() {
+            var balanceDisplay = document.getElementById("balanceDisplay");
+            balanceDisplay.innerHTML = "Текущий баланс: " + bankAccount.balance;
+        }
+
+        updateBalance();
+
+        // Задание 4
+        function generateEmail() {
+            var firstName = document.getElementById("firstName").value;
+            var lastName = document.getElementById("lastName").value;
+            var email = generateEmailFromName(firstName, lastName);
+            var emailDisplay = document.getElementById("emailDisplay");
+            emailDisplay.innerHTML = "Сгенерированный адрес электронной почты: " + email;
+        }
+
+        function generateEmailFromName(firstName, lastName) {
+            var cleanFirstName = firstName.toLowerCase().replace(/\s/g, '');
+            var cleanLastName = lastName.toLowerCase().replace(/\s/g, '');
+            return cleanFirstName + "." + cleanLastName + "@example.com";
+        }
+    </script>
+</body>
+</html>
